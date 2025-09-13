@@ -38,20 +38,45 @@ service cloud.firestore {
 
 // Estrutura das coleções no Firestore:
 /*
+Coleção: ensaios
+{
+  nome: string,
+  tipo: string, // Local, GEM, Regional, Geral por Famílias, Geral por Tipos, Outros
+  descricao: string,
+  data: string,
+  duracao: number, // em minutos
+  responsavel: string,
+  local: string,
+  createdAt: timestamp
+}
+
 Coleção: instrumentos
 {
   nome: string,
-  familia: string,
-  presente: number,
-  total: number,
+  familia: string, // Cordas, Madeiras, Metal
+  descricao: string,
+  createdAt: timestamp
+}
+
+Coleção: musicos
+{
+  nome: string,
+  telefone: string,
+  cidade: string,
+  congregacao: string,
+  instrumentoId: string, // referência ao instrumento
+  familia: string, // preenchido automaticamente baseado no instrumento
+  ativo: boolean,
   createdAt: timestamp
 }
 
 Coleção: frequencias
 {
   data: string,
-  instrumentoId: string,
-  presenca: number,
+  ensaioId: string,
+  musicoId: string,
+  presente: boolean,
+  observacoes: string,
   createdAt: timestamp
 }
 */
