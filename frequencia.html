@@ -35,34 +35,56 @@
     <main class="container">
         <section id="frequencia" class="section active">
             <h2>Controle de Frequência</h2>
-            <form id="formFrequencia">
+            
+            <!-- Seleção do Ensaio -->
+            <div class="selecao-ensaio" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.9); border-radius: 15px; backdrop-filter: blur(10px);">
+                <h3>Selecionar Ensaio</h3>
                 <div class="form-group">
-                    <label for="dataEnsaio">Data do Ensaio:</label>
-                    <input type="date" id="dataEnsaio" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="instrumentoFreq">Instrumento:</label>
-                    <select id="instrumentoFreq" required>
-                        <option value="">Selecione um instrumento</option>
+                    <label for="ensaioFrequencia">Ensaio:</label>
+                    <select id="ensaioFrequencia" onchange="carregarTabelaFrequencia()">
+                        <option value="">Selecione um ensaio</option>
                     </select>
                 </div>
-                
-                <div class="form-group">
-                    <label for="presencaFreq">Presença:</label>
-                    <input type="number" id="presencaFreq" min="0" required>
+            </div>
+            
+            <!-- Tabela de Frequência -->
+            <div id="tabelaFrequencia" style="display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.9); border-radius: 15px; backdrop-filter: blur(10px);">
+                <h3>Marcar Presença dos Músicos</h3>
+                <div class="info-ensaio" id="infoEnsaio" style="margin-bottom: 1rem; padding: 1rem; background: #f7fafc; border-radius: 8px; border-left: 4px solid #4299e1;">
+                    <!-- Informações do ensaio selecionado serão exibidas aqui -->
                 </div>
                 
-                <button type="submit">Registrar Frequência</button>
-            </form>
+                <div class="tabela-container" style="overflow-x: auto;">
+                    <table class="tabela-frequencia" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background: #4299e1; color: white;">
+                                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Músico</th>
+                                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Instrumento</th>
+                                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Família</th>
+                                <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Presente</th>
+                                <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Observações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaFrequencia">
+                            <!-- Músicos serão carregados aqui -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="acoes-frequencia" style="margin-top: 1.5rem; text-align: center;">
+                    <button onclick="salvarFrequencia()" class="btn-primary" style="padding: 12px 24px; background: #4299e1; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-right: 10px;">Salvar Frequência</button>
+                    <button onclick="limparFrequencia()" class="btn-secondary" style="padding: 12px 24px; background: #718096; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Limpar</button>
+                </div>
+            </div>
             
             <div class="frequencia-info" style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.9); border-radius: 15px; backdrop-filter: blur(10px);">
                 <h3>Instruções</h3>
                 <ul style="margin-left: 1.5rem; color: #2d3748;">
-                    <li>Selecione a data do ensaio</li>
-                    <li>Escolha o instrumento na lista</li>
-                    <li>Informe a quantidade de músicos presentes</li>
-                    <li>Clique em "Registrar Frequência" para salvar</li>
+                    <li>Primeiro, selecione o ensaio desejado na lista</li>
+                    <li>A tabela com todos os músicos será exibida automaticamente</li>
+                    <li>Marque a presença de cada músico individualmente</li>
+                    <li>Adicione observações se necessário (opcional)</li>
+                    <li>Clique em "Salvar Frequência" para registrar todas as presenças</li>
                 </ul>
             </div>
         </section>
