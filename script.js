@@ -118,6 +118,13 @@ function showSection(sectionName) {
             criarGraficos();
         }, 100);
     }
+    
+    // Carregar ensaios se for a seção de frequência
+    if (sectionName === 'frequencia') {
+        setTimeout(() => {
+            carregarEnsaiosFrequencia();
+        }, 100);
+    }
 }
 
 // Função para mostrar abas
@@ -659,6 +666,160 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// === FUNÇÕES DE FREQUÊNCIA POR ENSAIO ===
+
+// Carregar ensaios no select de frequência
+function carregarEnsaiosFrequencia() {
+    const select = document.getElementById('ensaioFrequencia');
+    if (!select) return;
+    
+    // Limpar opções existentes
+    select.innerHTML = '<option value="">Selecione um ensaio</option>';
+    
+    // Adicionar ensaios
+    ensaios.forEach(ensaio => {
+        const option = document.createElement('option');
+        option.value = ensaio.id;
+        option.textContent = `${ensaio.nome} - ${new Date(ensaio.data).toLocaleDateString('pt-BR')}`;
+        select.appendChild(option);
+    });
+}
+
+// Carregar tabela de frequência quando um ensaio é selecionado
+function carregarTabelaFrequencia() {
+    const selectEnsaio = document.getElementById('ensaioFrequencia');
+    const tabelaDiv = document.getElementById('tabelaFrequencia');
+    const infoEnsaio = document.getElementById('infoEnsaio');
+    const corpoTabela = document.getElementById('corpoTabelaFrequencia');
+    
+    if (!selectEnsaio || !tabelaDiv || !infoEnsaio || !corpoTabela) return;
+    
+    const ensaioId = selectEnsaio.value;
+    
+    if (!ensaioId) {
+        tabelaDiv.style.display = 'none';
+        return;
+    }
+    
+    // Encontrar o ensaio selecionado
+    const ensaio = ensaios.find(e => e.id === ensaioId);
+    if (!ensaio) return;
+    
+    // Exibir informações do ensaio
+    infoEnsaio.innerHTML = `
+        <strong>Ensaio:</strong> ${ensaio.nome}<br>
+        <strong>Data:</strong> ${new Date(ensaio.data).toLocaleDateString('pt-BR')}<br>
+        <strong>Tipo:</strong> ${ensaio.tipo}<br>
+        <strong>Responsável:</strong> ${ensaio.responsavel || 'Não informado'}
+    `;
+    
+    // Limpar tabela
+    corpoTabela.innerHTML = '';
+    
+    // Carregar músicos ativos
+    const musicosAtivos = musicos.filter(m => m.ativo);
+    
+    musicosAtivos.forEach(musico => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #ddd';
+        
+        // Verificar se já existe frequência registrada para este músico neste ensaio
+        const frequenciaExistente = frequencias.find(f => 
+            f.ensaioId === ensaioId && f.musicoId === musico.id
+        );
+        
+        tr.innerHTML = `
+            <td style="padding: 12px; border: 1px solid #ddd;">${musico.nome}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${musico.instrumento}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${musico.familia}</td>
+            <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">
+                <input type="checkbox" 
+                       id="presente_${musico.id}" 
+                       ${frequenciaExistente && frequenciaExistente.presente ? 'checked' : ''}
+                       style="transform: scale(1.2);">
+            </td>
+            <td style="padding: 12px; border: 1px solid #ddd;">
+                <input type="text" 
+                       id="obs_${musico.id}" 
+                       value="${frequenciaExistente ? frequenciaExistente.observacoes || '' : ''}"
+                       placeholder="Observações..."
+                       style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 4px;">
+            </td>
+        `;
+        
+        corpoTabela.appendChild(tr);
+    });
+    
+    // Exibir a tabela
+    tabelaDiv.style.display = 'block';
+}
+
+// Salvar frequência do ensaio
+async function salvarFrequencia() {
+    const selectEnsaio = document.getElementById('ensaioFrequencia');
+    const ensaioId = selectEnsaio?.value;
+    
+    if (!ensaioId) {
+        mostrarMensagem('Selecione um ensaio primeiro!', 'error');
+        return;
+    }
+    
+    try {
+        const musicosAtivos = musicos.filter(m => m.ativo);
+        const batch = db.batch();
+        
+        for (const musico of musicosAtivos) {
+            const presenteCheckbox = document.getElementById(`presente_${musico.id}`);
+            const obsInput = document.getElementById(`obs_${musico.id}`);
+            
+            if (presenteCheckbox && obsInput) {
+                const presente = presenteCheckbox.checked;
+                const observacoes = obsInput.value.trim();
+                
+                // Verificar se já existe registro
+                const frequenciaExistente = frequencias.find(f => 
+                    f.ensaioId === ensaioId && f.musicoId === musico.id
+                );
+                
+                const dadosFrequencia = {
+                    ensaioId,
+                    musicoId: musico.id,
+                    presente,
+                    observacoes,
+                    dataRegistro: new Date().toISOString()
+                };
+                
+                if (frequenciaExistente) {
+                    // Atualizar registro existente
+                    const docRef = db.collection('frequencias').doc(frequenciaExistente.id);
+                    batch.update(docRef, dadosFrequencia);
+                } else {
+                    // Criar novo registro
+                    const docRef = db.collection('frequencias').doc();
+                    batch.set(docRef, { ...dadosFrequencia, id: docRef.id });
+                }
+            }
+        }
+        
+        await batch.commit();
+        await carregarDados(); // Recarregar dados
+        mostrarMensagem('Frequência salva com sucesso!', 'success');
+        
+    } catch (error) {
+        console.error('Erro ao salvar frequência:', error);
+        mostrarMensagem('Erro ao salvar frequência: ' + error.message, 'error');
+    }
+}
+
+// Limpar seleção de frequência
+function limparFrequencia() {
+    const selectEnsaio = document.getElementById('ensaioFrequencia');
+    const tabelaDiv = document.getElementById('tabelaFrequencia');
+    
+    if (selectEnsaio) selectEnsaio.value = '';
+    if (tabelaDiv) tabelaDiv.style.display = 'none';
+}
 
 // Atualizar dados periodicamente
 setInterval(() => {
