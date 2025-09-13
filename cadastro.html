@@ -35,16 +35,74 @@
     <main class="container">
         <section id="cadastro" class="section active">
             <div class="cadastro-tabs">
-                <button class="tab-button active" onclick="showTab('instrumentos')">Instrumentos</button>
-                <button class="tab-button" onclick="showTab('ensaios')">Tipos de Ensaios</button>
+                <button class="tab-button active" onclick="showTab('ensaios')">Ensaios</button>
+                <button class="tab-button" onclick="showTab('instrumentos')">Instrumentos</button>
+                <button class="tab-button" onclick="showTab('musicos')">Músicos</button>
             </div>
             
-            <div id="instrumentos-tab" class="tab-content active">
+            <div id="ensaios-tab" class="tab-content active">
+                <h2>Cadastro de Ensaios</h2>
+                <form id="formEnsaio">
+                    <div class="form-group">
+                        <label for="nomeEnsaio">Nome do Ensaio:</label>
+                        <input type="text" id="nomeEnsaio" placeholder="Ex: Ensaio Geral de Domingo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipoEnsaio">Tipo de Ensaio:</label>
+                        <select id="tipoEnsaio" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="Local">Local</option>
+                            <option value="GEM">GEM</option>
+                            <option value="Regional">Regional</option>
+                            <option value="Geral por Famílias">Geral por Famílias</option>
+                            <option value="Geral por Tipos">Geral por Tipos</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricaoEnsaio">Descrição:</label>
+                        <textarea id="descricaoEnsaio" rows="3" placeholder="Descrição do ensaio..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dataEnsaio">Data do Ensaio:</label>
+                        <input type="datetime-local" id="dataEnsaio" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="duracaoEnsaio">Duração (minutos):</label>
+                        <input type="number" id="duracaoEnsaio" min="15" max="300" placeholder="120" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="responsavelEnsaio">Responsável:</label>
+                        <input type="text" id="responsavelEnsaio" placeholder="Nome do responsável" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="localEnsaio">Local:</label>
+                        <input type="text" id="localEnsaio" placeholder="Local do ensaio" required>
+                    </div>
+                    
+                    <button type="submit">Cadastrar Ensaio</button>
+                </form>
+                
+                <div class="ensaios-lista" style="margin-top: 2rem;">
+                    <h3>Ensaios Cadastrados</h3>
+                    <div id="listaEnsaios" class="lista-items">
+                        <!-- Lista será preenchida dinamicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="instrumentos-tab" class="tab-content">
                 <h2>Cadastro de Instrumentos</h2>
                 <form id="formInstrumento">
                     <div class="form-group">
                         <label for="nomeInstrumento">Nome do Instrumento:</label>
-                        <input type="text" id="nomeInstrumento" required>
+                        <input type="text" id="nomeInstrumento" placeholder="Ex: Violino, Flauta, Trompete" required>
                     </div>
                     
                     <div class="form-group">
@@ -53,65 +111,75 @@
                             <option value="">Selecione uma família</option>
                             <option value="Cordas">Cordas</option>
                             <option value="Madeiras">Madeiras</option>
-                            <option value="Metais">Metais</option>
-                            <option value="Percussão">Percussão</option>
+                            <option value="Metal">Metal</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="quantidadePresente">Quantidade Presente:</label>
-                        <input type="number" id="quantidadePresente" min="0" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="quantidadeTotal">Quantidade Total:</label>
-                        <input type="number" id="quantidadeTotal" min="0" required>
+                        <label for="descricaoInstrumento">Descrição:</label>
+                        <textarea id="descricaoInstrumento" rows="3" placeholder="Descrição do instrumento..."></textarea>
                     </div>
                     
                     <button type="submit">Cadastrar Instrumento</button>
                 </form>
+                
+                <div class="instrumentos-lista" style="margin-top: 2rem;">
+                    <h3>Instrumentos Cadastrados</h3>
+                    <div id="listaInstrumentos" class="lista-items">
+                        <!-- Lista será preenchida dinamicamente -->
+                    </div>
+                </div>
             </div>
             
-            <div id="ensaios-tab" class="tab-content">
-                <h2>Cadastro de Tipos de Ensaios</h2>
-                <form id="formTipoEnsaio">
+            <div id="musicos-tab" class="tab-content">
+                <h2>Cadastro de Músicos</h2>
+                <form id="formMusico">
                     <div class="form-group">
-                        <label for="nomeTipoEnsaio">Nome do Tipo de Ensaio:</label>
-                        <input type="text" id="nomeTipoEnsaio" placeholder="Ex: Ensaio Geral, Ensaio de Jovens, Ensaio de Crianças" required>
+                        <label for="nomeMusico">Nome Completo:</label>
+                        <input type="text" id="nomeMusico" placeholder="Nome completo do músico" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="descricaoEnsaio">Descrição:</label>
-                        <textarea id="descricaoEnsaio" rows="3" placeholder="Descrição do tipo de ensaio..."></textarea>
+                        <label for="telefoneMusico">Telefone:</label>
+                        <input type="tel" id="telefoneMusico" placeholder="(00) 00000-0000" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="duracaoEnsaio">Duração (minutos):</label>
-                        <input type="number" id="duracaoEnsaio" min="15" max="300" placeholder="120">
+                        <label for="cidadeMusico">Cidade:</label>
+                        <input type="text" id="cidadeMusico" placeholder="Cidade onde reside" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="frequenciaEnsaio">Frequência:</label>
-                        <select id="frequenciaEnsaio">
-                            <option value="">Selecione a frequência</option>
-                            <option value="Semanal">Semanal</option>
-                            <option value="Quinzenal">Quinzenal</option>
-                            <option value="Mensal">Mensal</option>
-                            <option value="Especial">Especial</option>
+                        <label for="congregacaoMusico">Congregação:</label>
+                        <input type="text" id="congregacaoMusico" placeholder="Nome da congregação" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instrumentoMusico">Instrumento:</label>
+                        <select id="instrumentoMusico" required>
+                            <option value="">Selecione um instrumento</option>
+                            <!-- Opções serão preenchidas dinamicamente -->
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="responsavelEnsaio">Responsável:</label>
-                        <input type="text" id="responsavelEnsaio" placeholder="Nome do responsável pelo ensaio">
+                        <label for="familiaMusico">Família do Instrumento:</label>
+                        <input type="text" id="familiaMusico" readonly placeholder="Será preenchido automaticamente">
                     </div>
                     
-                    <button type="submit">Cadastrar Tipo de Ensaio</button>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="ativoMusico" checked>
+                            Músico ativo
+                        </label>
+                    </div>
+                    
+                    <button type="submit">Cadastrar Músico</button>
                 </form>
                 
-                <div class="tipos-ensaios-lista" style="margin-top: 2rem;">
-                    <h3>Tipos de Ensaios Cadastrados</h3>
-                    <div id="listaTiposEnsaios" class="lista-items">
+                <div class="musicos-lista" style="margin-top: 2rem;">
+                    <h3>Músicos Cadastrados</h3>
+                    <div id="listaMusicos" class="lista-items">
                         <!-- Lista será preenchida dinamicamente -->
                     </div>
                 </div>
