@@ -93,7 +93,9 @@ async function carregarDados() {
         
         // Atualizar interface
         atualizarDashboard();
-        atualizarTabelaRelatorio();
+        if (document.getElementById('corpoTabelaInstrumentos')) {
+            atualizarTabelaRelatorio();
+        }
         atualizarSelectInstrumentos();
         
     } catch (error) {
@@ -102,7 +104,9 @@ async function carregarDados() {
         // Usar dados locais como fallback
         instrumentos = [...instrumentosIniciais];
         atualizarDashboard();
-        atualizarTabelaRelatorio();
+        if (document.getElementById('corpoTabelaInstrumentos')) {
+            atualizarTabelaRelatorio();
+        }
     }
 }
 
