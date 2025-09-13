@@ -12,26 +12,7 @@ let chartPresencaMusicos = null;
 let chartPresencaMinisterio = null;
 
 // Dados iniciais baseados na imagem
-const instrumentosIniciais = [
-    { nome: 'Baritono', familia: 'Metais', presente: 4, total: 4 },
-    { nome: 'Cornet', familia: 'Metais', presente: 5, total: 5 },
-    { nome: 'Euphonium', familia: 'Metais', presente: 3, total: 3 },
-    { nome: 'Flugelhorn', familia: 'Metais', presente: 1, total: 1 },
-    { nome: 'Pocket', familia: 'Metais', presente: 4, total: 4 },
-    { nome: 'Trombone', familia: 'Metais', presente: 18, total: 18 },
-    { nome: 'Trombone', familia: 'Metais', presente: 3, total: 3 },
-    { nome: 'Trompa', familia: 'Metais', presente: 3, total: 3 },
-    { nome: 'Trompete', familia: 'Metais', presente: 20, total: 20 },
-    { nome: 'Tuba', familia: 'Metais', presente: 8, total: 8 },
-    { nome: 'Violino', familia: 'Cordas', presente: 12, total: 15 },
-    { nome: 'Viola', familia: 'Cordas', presente: 8, total: 10 },
-    { nome: 'Violoncelo', familia: 'Cordas', presente: 6, total: 8 },
-    { nome: 'Contrabaixo', familia: 'Cordas', presente: 4, total: 5 },
-    { nome: 'Flauta', familia: 'Madeiras', presente: 3, total: 4 },
-    { nome: 'Clarinete', familia: 'Madeiras', presente: 5, total: 6 },
-    { nome: 'Oboé', familia: 'Madeiras', presente: 2, total: 3 },
-    { nome: 'Fagote', familia: 'Madeiras', presente: 1, total: 2 }
-];
+// Dados serão carregados exclusivamente do Firebase
 
 // Inicialização da aplicação
 document.addEventListener('DOMContentLoaded', function() {
@@ -43,35 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Função para inicializar a aplicação
 function inicializarApp() {
-    // Carregar instrumentos iniciais se não existirem no Firebase
-    carregarInstrumentosIniciais();
-    
     // Mostrar seção dashboard por padrão
     showSection('dashboard');
     
     // Atualizar dashboard
     atualizarDashboard();
-}
-
-// Função para carregar instrumentos iniciais
-async function carregarInstrumentosIniciais() {
-    try {
-        const snapshot = await db.collection('instrumentos').get();
-        if (snapshot.empty) {
-            // Se não há instrumentos, carregar dados iniciais
-            for (const instrumento of instrumentosIniciais) {
-                await db.collection('instrumentos').add({
-                    ...instrumento,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }
-            console.log('Instrumentos iniciais carregados!');
-        }
-    } catch (error) {
-        console.error('Erro ao carregar instrumentos iniciais:', error);
-        // Fallback para dados locais
-        instrumentos = [...instrumentosIniciais];
-    }
 }
 
 // Função para carregar dados do Firebase
@@ -100,13 +57,7 @@ async function carregarDados() {
         
     } catch (error) {
         console.error('Erro ao carregar dados:', error);
-        mostrarMensagem('Erro ao carregar dados. Usando dados locais.', 'error');
-        // Usar dados locais como fallback
-        instrumentos = [...instrumentosIniciais];
-        atualizarDashboard();
-        if (document.getElementById('corpoTabelaInstrumentos')) {
-            atualizarTabelaRelatorio();
-        }
+        mostrarMensagem('Erro ao carregar dados do banco de dados.', 'error');
     }
 }
 
