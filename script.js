@@ -62,6 +62,11 @@ async function carregarDados() {
         atualizarListaInstrumentos();
         atualizarListaMusicos();
         
+        // Atualizar select de ensaios na página de frequência se estiver ativa
+        if (document.getElementById('ensaioFrequencia')) {
+            carregarEnsaiosFrequencia();
+        }
+        
     } catch (error) {
         console.error('Erro ao carregar dados:', error);
         mostrarMensagem('Erro ao carregar dados do banco de dados.', 'error');
