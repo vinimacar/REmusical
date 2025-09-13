@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle de Instrumentos - Congregação Cristã</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Redirecionar automaticamente para o dashboard
+        window.location.href = 'dashboard.html';
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>CONGREGAÇÃO CRISTÃ NO BRASIL</h1>
+            <p>Sistema de Controle de Instrumentos Musicais</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="showSection('cadastro')">Cadastro</a></li>
+                <li><a href="#" onclick="showSection('relatorio')">Relatório</a></li>
+                <li><a href="#" onclick="showSection('frequencia')">Frequência</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <h2>Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total de Músicos</h3>
+                    <span id="totalMusicos" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de Organistas</h3>
+                    <span id="totalOrganistas" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Presença Média</h3>
+                    <span id="presencaMedia" class="stat-number">0%</span>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h3>Presença Efetiva - Músicos</h3>
+                    <canvas id="chartPresencaMusicos"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h3>Presença do Ministério</h3>
+                    <canvas id="chartPresencaMinisterio"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cadastro Section -->
+        <section id="cadastro" class="section">
+            <h2>Cadastro de Instrumentos</h2>
+            <form id="formInstrumento">
+                <div class="form-group">
+                    <label for="nomeInstrumento">Nome do Instrumento:</label>
+                    <input type="text" id="nomeInstrumento" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="familiaInstrumento">Família:</label>
+                    <select id="familiaInstrumento" required>
+                        <option value="">Selecione uma família</option>
+                        <option value="Cordas">Cordas</option>
+                        <option value="Madeiras">Madeiras</option>
+                        <option value="Metais">Metais</option>
+                        <option value="Percussão">Percussão</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantidadePresente">Quantidade Presente:</label>
+                    <input type="number" id="quantidadePresente" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantidadeTotal">Quantidade Total:</label>
+                    <input type="number" id="quantidadeTotal" min="0" required>
+                </div>
+                
+                <button type="submit">Cadastrar Instrumento</button>
+            </form>
+        </section>
+
+        <!-- Relatório Section -->
+        <section id="relatorio" class="section">
+            <h2>Relatório de Frequência</h2>
+            <div class="relatorio-header">
+                <div class="info-ensaio">
+                    <p><strong>Ensaio Geral por Família</strong></p>
+                    <p>Data: <span id="dataRelatorio"></span></p>
+                    <p>Local: ITUIUTABA</p>
+                </div>
+            </div>
+            
+            <div class="tabela-frequencia">
+                <table id="tabelaInstrumentos">
+                    <thead>
+                        <tr>
+                            <th>N.</th>
+                            <th>Instrumento</th>
+                            <th>Presente</th>
+                            <th>Ausente</th>
+                            <th>Frequência (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaInstrumentos">
+                        <!-- Dados serão inseridos dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Frequência Section -->
+        <section id="frequencia" class="section">
+            <h2>Controle de Frequência</h2>
+            <form id="formFrequencia">
+                <div class="form-group">
+                    <label for="dataEnsaio">Data do Ensaio:</label>
+                    <input type="date" id="dataEnsaio" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="instrumentoFreq">Instrumento:</label>
+                    <select id="instrumentoFreq" required>
+                        <option value="">Selecione um instrumento</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="presencaFreq">Presença:</label>
+                    <input type="number" id="presencaFreq" min="0" required>
+                </div>
+                
+                <button type="submit">Registrar Frequência</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Congregação Cristã no Brasil - Sistema de Controle de Instrumentos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

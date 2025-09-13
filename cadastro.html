@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Sistema de Controle de Instrumentos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Congregação Cristã no Brasil</h1>
+            <p>Sistema de Controle de Instrumentos Musicais</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="cadastro.html" class="active">Cadastro</a></li>
+                <li><a href="relatorio.html">Relatório</a></li>
+                <li><a href="frequencia.html">Frequência</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="cadastro" class="section active">
+            <div class="cadastro-tabs">
+                <button class="tab-button active" onclick="showTab('instrumentos')">Instrumentos</button>
+                <button class="tab-button" onclick="showTab('ensaios')">Tipos de Ensaios</button>
+            </div>
+            
+            <div id="instrumentos-tab" class="tab-content active">
+                <h2>Cadastro de Instrumentos</h2>
+                <form id="formInstrumento">
+                    <div class="form-group">
+                        <label for="nomeInstrumento">Nome do Instrumento:</label>
+                        <input type="text" id="nomeInstrumento" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="familiaInstrumento">Família:</label>
+                        <select id="familiaInstrumento" required>
+                            <option value="">Selecione uma família</option>
+                            <option value="Cordas">Cordas</option>
+                            <option value="Madeiras">Madeiras</option>
+                            <option value="Metais">Metais</option>
+                            <option value="Percussão">Percussão</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantidadePresente">Quantidade Presente:</label>
+                        <input type="number" id="quantidadePresente" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantidadeTotal">Quantidade Total:</label>
+                        <input type="number" id="quantidadeTotal" min="0" required>
+                    </div>
+                    
+                    <button type="submit">Cadastrar Instrumento</button>
+                </form>
+            </div>
+            
+            <div id="ensaios-tab" class="tab-content">
+                <h2>Cadastro de Tipos de Ensaios</h2>
+                <form id="formTipoEnsaio">
+                    <div class="form-group">
+                        <label for="nomeTipoEnsaio">Nome do Tipo de Ensaio:</label>
+                        <input type="text" id="nomeTipoEnsaio" placeholder="Ex: Ensaio Geral, Ensaio de Jovens, Ensaio de Crianças" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricaoEnsaio">Descrição:</label>
+                        <textarea id="descricaoEnsaio" rows="3" placeholder="Descrição do tipo de ensaio..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="duracaoEnsaio">Duração (minutos):</label>
+                        <input type="number" id="duracaoEnsaio" min="15" max="300" placeholder="120">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="frequenciaEnsaio">Frequência:</label>
+                        <select id="frequenciaEnsaio">
+                            <option value="">Selecione a frequência</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Quinzenal">Quinzenal</option>
+                            <option value="Mensal">Mensal</option>
+                            <option value="Especial">Especial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="responsavelEnsaio">Responsável:</label>
+                        <input type="text" id="responsavelEnsaio" placeholder="Nome do responsável pelo ensaio">
+                    </div>
+                    
+                    <button type="submit">Cadastrar Tipo de Ensaio</button>
+                </form>
+                
+                <div class="tipos-ensaios-lista" style="margin-top: 2rem;">
+                    <h3>Tipos de Ensaios Cadastrados</h3>
+                    <div id="listaTiposEnsaios" class="lista-items">
+                        <!-- Lista será preenchida dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Congregação Cristã no Brasil - Sistema de Controle de Instrumentos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório - Sistema de Controle de Instrumentos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Congregação Cristã no Brasil</h1>
+            <p>Sistema de Controle de Instrumentos Musicais</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+                <li><a href="relatorio.html" class="active">Relatório</a></li>
+                <li><a href="frequencia.html">Frequência</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="relatorio" class="section active">
+            <h2>Relatório de Frequência</h2>
+            <div class="relatorio-header">
+                <div class="info-ensaio">
+                    <p><strong>Ensaio Geral por Família</strong></p>
+                    <p>Data: <span id="dataRelatorio"></span></p>
+                    <p>Local: ITUIUTABA</p>
+                </div>
+            </div>
+            
+            <div class="tabela-frequencia">
+                <table id="tabelaInstrumentos">
+                    <thead>
+                        <tr>
+                            <th>N.</th>
+                            <th>Instrumento</th>
+                            <th>Presente</th>
+                            <th>Ausente</th>
+                            <th>Frequência (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaInstrumentos">
+                        <!-- Dados serão inseridos dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="relatorio-actions" style="margin-top: 2rem; text-align: center;">
+                <button onclick="exportarDados()" class="btn-secondary">Exportar Dados</button>
+                <button onclick="imprimirRelatorio()" class="btn-primary">Imprimir Relatório</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Congregação Cristã no Brasil - Sistema de Controle de Instrumentos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

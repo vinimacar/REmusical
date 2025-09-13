@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Controle de Instrumentos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Congregação Cristã no Brasil</h1>
+            <p>Sistema de Controle de Instrumentos Musicais</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+                <li><a href="relatorio.html">Relatório</a></li>
+                <li><a href="frequencia.html">Frequência</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="dashboard" class="section active">
+            <h2>Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total de Músicos</h3>
+                    <span id="totalMusicos" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de Organistas</h3>
+                    <span id="totalOrganistas" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Presença Média</h3>
+                    <span id="presencaMedia" class="stat-number">0%</span>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h3>Presença Efetiva - Músicos</h3>
+                    <canvas id="chartPresencaMusicos"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h3>Presença do Ministério</h3>
+                    <canvas id="chartPresencaMinisterio"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Congregação Cristã no Brasil - Sistema de Controle de Instrumentos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

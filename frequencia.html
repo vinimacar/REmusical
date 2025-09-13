@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequência - Sistema de Controle de Instrumentos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Congregação Cristã no Brasil</h1>
+            <p>Sistema de Controle de Instrumentos Musicais</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+                <li><a href="relatorio.html">Relatório</a></li>
+                <li><a href="frequencia.html" class="active">Frequência</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="frequencia" class="section active">
+            <h2>Controle de Frequência</h2>
+            <form id="formFrequencia">
+                <div class="form-group">
+                    <label for="dataEnsaio">Data do Ensaio:</label>
+                    <input type="date" id="dataEnsaio" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="instrumentoFreq">Instrumento:</label>
+                    <select id="instrumentoFreq" required>
+                        <option value="">Selecione um instrumento</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="presencaFreq">Presença:</label>
+                    <input type="number" id="presencaFreq" min="0" required>
+                </div>
+                
+                <button type="submit">Registrar Frequência</button>
+            </form>
+            
+            <div class="frequencia-info" style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.9); border-radius: 15px; backdrop-filter: blur(10px);">
+                <h3>Instruções</h3>
+                <ul style="margin-left: 1.5rem; color: #2d3748;">
+                    <li>Selecione a data do ensaio</li>
+                    <li>Escolha o instrumento na lista</li>
+                    <li>Informe a quantidade de músicos presentes</li>
+                    <li>Clique em "Registrar Frequência" para salvar</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Congregação Cristã no Brasil - Sistema de Controle de Instrumentos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
