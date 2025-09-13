@@ -317,6 +317,8 @@ function criarGraficoPresencaMinisterio() {
 // Função para atualizar tabela do relatório
 function atualizarTabelaRelatorio() {
     const tbody = document.getElementById('corpoTabelaInstrumentos');
+    if (!tbody) return;
+    
     tbody.innerHTML = '';
     
     instrumentos.forEach((instrumento, index) => {
@@ -324,13 +326,15 @@ function atualizarTabelaRelatorio() {
         const ausente = instrumento.total - instrumento.presente;
         
         const row = tbody.insertRow();
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${instrumento.nome}</td>
-            <td>${instrumento.presente}</td>
-            <td>${ausente}</td>
-            <td>${frequencia}%</td>
-        `;
+        if (row) {
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${instrumento.nome}</td>
+                <td>${instrumento.presente}</td>
+                <td>${ausente}</td>
+                <td>${frequencia}%</td>
+            `;
+        }
     });
 }
 
